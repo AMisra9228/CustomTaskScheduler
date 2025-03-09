@@ -44,6 +44,7 @@ class AccountFragment : Fragment() {
         binding.btnSave.setOnClickListener {
             saveInfo()
             /*CoroutineScope(Dispatchers.IO).launch {
+                //get network time
                 printTimes()
             }*/
         }
