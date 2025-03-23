@@ -2,8 +2,9 @@ name: Run test
 
 on:
   pull_request:
-    branches: 
-      - master
+    branches: [master]
+
+  workflow_dispatch:
 
 jobs:
   test:
