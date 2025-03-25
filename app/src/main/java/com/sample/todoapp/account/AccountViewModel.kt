@@ -14,7 +14,5 @@ class AccountViewModel(private val repository: AccountRepository) : ViewModel() 
         CoroutineScope(Dispatchers.IO).launch {
             repository.insert(info)
         }
-
-
     }
 }
