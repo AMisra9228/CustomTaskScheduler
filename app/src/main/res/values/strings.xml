@@ -11,4 +11,14 @@
     <string name="email">Email</string>
     <string name="dob">DOB</string>
     <string name="btn_save">Save</string>
+    <string name="task_name">Task Name</string>">
+    <string name="task_des">Task Description</string>">
+    <string name="task_date">Select Task Date</string>">
+    <string name="task_pr">Select Task Priority (Optional)</string>">
+    <string name="task_high">High</string>">
+    <string name="task_low">Low</string>">
+    <string name="task_medium">Medium</string>">
+    <string name="save_task">Save Task</string>">
+    <string name="logout">Logout</string>">
+    <string name="task_report">Report</string>">
 </resources>

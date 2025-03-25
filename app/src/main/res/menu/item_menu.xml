@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/mnuReport"
+        android:icon="@drawable/rpt_menu"
+        android:title="@string/task_report" />
+
+    <item
+        android:id="@+id/mnuLogout"
+        android:icon="@drawable/close"
+        android:title="@string/logout" />
+
+</menu>
