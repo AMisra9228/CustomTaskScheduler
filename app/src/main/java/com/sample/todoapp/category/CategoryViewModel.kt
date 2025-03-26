@@ -1,8 +1,6 @@
 package com.sample.todoapp.category
 
 import androidx.lifecycle.ViewModel
-import com.sample.todoapp.account.AccountRepository
-import com.sample.todoapp.data.entities.Info
 import com.sample.todoapp.data.entities.Item
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

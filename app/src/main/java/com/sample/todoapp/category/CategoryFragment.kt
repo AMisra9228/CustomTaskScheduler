@@ -2,22 +2,15 @@ package com.sample.todoapp.category
 
 import android.app.DatePickerDialog
 import android.os.Bundle
-import android.util.Patterns
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.sample.todoapp.R
-import com.sample.todoapp.account.AccountRepository
-import com.sample.todoapp.account.AccountViewModel
-import com.sample.todoapp.account.AccountViewModelFactory
 import com.sample.todoapp.data.TaskDatabase
-import com.sample.todoapp.databinding.FragmentAccountBinding
 import com.sample.todoapp.databinding.FragmentCategoryBinding
-import org.xml.sax.Parser
 import java.util.Calendar
 
 class CategoryFragment : Fragment() {
@@ -25,6 +18,8 @@ class CategoryFragment : Fragment() {
     private var _binding: FragmentCategoryBinding? = null
     private val binding get() = _binding!!
     private lateinit var categoryViewModel: CategoryViewModel
+    var taskPrio : String = ""
+    var assgnDate : String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,11 +38,14 @@ class CategoryFragment : Fragment() {
         binding.radioGroup1.setOnCheckedChangeListener(
             RadioGroup.OnCheckedChangeListener { group, checkedId ->
                 if(checkedId == R.id.radioButton1) {
-                    Toast.makeText(context, "Low", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(context, "Low", Toast.LENGTH_SHORT).show()
+                    taskPrio = "L"
                 } else if(checkedId == R.id.radioButton2) {
-                    Toast.makeText(context, "Medium", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(context, "Medium", Toast.LENGTH_SHORT).show()
+                    taskPrio = "M"
                 } else {
-                    Toast.makeText(context, "High", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(context, "High", Toast.LENGTH_SHORT).show()
+                    taskPrio = "H"
                 }
             })
 
@@ -61,32 +59,32 @@ class CategoryFragment : Fragment() {
                     DatePickerDialog(it1, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
                         // Display Selected date in textbox
                         binding.taskDt.setText("" + dayOfMonth + " - " + (Integer.valueOf(monthOfYear) + 1) + " - " + year)
+                        assgnDate = binding.taskDt.text.toString()
                     }, year, month, day).show()
                 }
 
         }
 
         binding.btnSave.setOnClickListener {
-
+            saveItemInfo()
         }
         return binding.root
     }
 
     private fun saveItemInfo() {
-        val taskName = binding.taskName.getEditText().toString()
-        val taskDescription = binding.taskDesp.getEditText().toString()
+        val taskName = binding.taskNameNew.text.toString()
+        val taskDescription = binding.taskDespNew.text.toString()
 
-
-        /*if(userName.isEmpty() || userMail.isEmpty()){
+        if(taskName.isEmpty() || taskDescription.isEmpty() || assgnDate.isEmpty()){
             Toast.makeText(context, "Enter all details", Toast.LENGTH_SHORT).show()
             return
-        } else  if (!Patterns.EMAIL_ADDRESS.matcher(userMail).matches()) {
-            Toast.makeText(context, "Invalid Email", Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show()
-            accountViewModel.insertData(userName, userMail)
-            binding.userName.text?.clear()
-            binding.userMail.text?.clear()
-        }*/
+            Toast.makeText(context, "Task saved", Toast.LENGTH_SHORT).show()
+            categoryViewModel.insertData(taskName, taskDescription, taskPrio,assgnDate)
+            binding.taskNameNew.text?.clear()
+            binding.taskDespNew.text?.clear()
+            binding.radioGroup1.clearCheck()
+            binding.taskDt!!.text = ""
+        }
     }
 }

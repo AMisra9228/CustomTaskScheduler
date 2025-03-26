@@ -17,9 +17,10 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <EditText
+            android:id="@+id/taskNameNew"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:hint="@string/task_name"
             android:maxLines="1"
             android:inputType="text"
@@ -38,10 +39,11 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <EditText
+            android:id="@+id/taskDespNew"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/task_des"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:inputType="text"
             android:maxLines="10"
             android:textSize="14sp"/>
