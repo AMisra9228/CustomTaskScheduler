@@ -62,12 +62,12 @@ class CategoryFragment : Fragment() {
                         assgnDate = binding.taskDt.text.toString()
                     }, year, month, day).show()
                 }
-
         }
 
         binding.btnSave.setOnClickListener {
             saveItemInfo()
         }
+
         return binding.root
     }
 
