@@ -4,10 +4,13 @@ import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.sample.todoapp.R
 import com.sample.todoapp.data.TaskDatabase
 import com.sample.todoapp.databinding.FragmentAccountBinding
 import kotlinx.coroutines.Dispatchers
@@ -50,6 +53,11 @@ class AccountFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.item_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     private fun saveInfo() {

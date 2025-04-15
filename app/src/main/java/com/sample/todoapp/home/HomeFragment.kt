@@ -1,17 +1,20 @@
 package com.sample.todoapp.home
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import android.widget.Toast
+import android.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,17 +32,30 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //val tempViewModel : ProductViewModel by viewModels()
-        /*val tempViewModel : ItemViewModel by viewModels()
-        taskViewModel = tempViewModel*/
+        setHasOptionsMenu(true)
     }
 
+    @SuppressLint("ResourceType")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+
+        binding.toolbar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.mnuReport -> {
+                    Toast.makeText(context, "Report", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                R.id.mnuLogout -> {
+                    Toast.makeText(context, "Logout", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                else -> false
+            }
+        }
 
         // Setup RecyclerView
         adapter = ItemAdapter(
@@ -59,9 +75,7 @@ class HomeFragment : Fragment() {
         // Observe data from ViewModel
         taskViewModel.allTodo.observe(viewLifecycleOwner, Observer { todos ->
             todos?.let { adapter.submitList(it) }
-
         })
-
 
         return binding.root
     }

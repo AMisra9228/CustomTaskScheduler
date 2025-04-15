@@ -3,6 +3,8 @@ package com.sample.todoapp.category
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioGroup
@@ -34,6 +36,20 @@ class CategoryFragment : Fragment() {
         val itemDao = TaskDatabase.getInstance(requireContext()).itemDao()
         val repository = CategoryRepo(itemDao)
         categoryViewModel = CategoryViewModelFact(repository).create(CategoryViewModel::class.java)
+
+        binding.catToolbar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.mnuReport -> {
+                    Toast.makeText(context, "Report", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                R.id.mnuLogout -> {
+                    Toast.makeText(context, "Logout", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                else -> false
+            }
+        }
 
         binding.radioGroup1.setOnCheckedChangeListener(
             RadioGroup.OnCheckedChangeListener { group, checkedId ->
@@ -69,6 +85,11 @@ class CategoryFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.item_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     private fun saveItemInfo() {

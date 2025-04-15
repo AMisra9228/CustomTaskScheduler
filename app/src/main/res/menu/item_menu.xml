@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/mnuReport"
-        android:icon="@drawable/rpt_menu"
+        app:showAsAction="never"
         android:title="@string/task_report" />
 
     <item
         android:id="@+id/mnuLogout"
-        android:icon="@drawable/close"
+        app:showAsAction="never"
         android:title="@string/logout" />
 
 </menu>
