@@ -15,10 +15,12 @@ class AppModule(private val context: Context) {
 
     @Provides
     @Singleton
+
     fun provideContext(): Context = context
 
     @Provides
     @Singleton
+
     fun provideDatabase(): TaskDatabase =
         TaskDatabase.getInstance(context)
 
@@ -31,9 +33,11 @@ class AppModule(private val context: Context) {
     fun provideUserRepository(userDao: UserDao): UserRepository =
         UserRepository(userDao)
 
+
     @Provides
     @Singleton
     fun provideSharedPreferences(context: Context): SharedPreferences {
         return context.getSharedPreferences("UserLog", Context.MODE_PRIVATE)
     }
+
 }
