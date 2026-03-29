@@ -1,5 +1,15 @@
 package com.sample.todoapp.account
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothDevice
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
@@ -8,7 +18,10 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.annotation.RequiresPermission
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.sample.todoapp.R
 import com.sample.todoapp.data.TaskDatabase
@@ -29,8 +42,38 @@ class AccountFragment : Fragment() {
 
     val TIME_SERVER: String = "time-a.nist.gov"
 
+    private lateinit var bluetoothAdapter: BluetoothAdapter
+    private lateinit var deviceList: ArrayList<String>
+    private lateinit var arrayAdapter: ArrayAdapter<String>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+    }
+
+    private val receiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if (BluetoothDevice.ACTION_FOUND == intent?.action) {
+                val device =
+                    intent.getParcelableExtra<BluetoothDevice>(BluetoothDevice.EXTRA_DEVICE)
+
+                Log.d("BT_SCAN", "Device detected = ${device?.address}")
+
+                device?.let {
+                    @SuppressLint("MissingPermission")
+                    val name = if (hasBluetoothConnectPermission()) {
+                        it.name ?: "Unknown"
+                    } else {
+                        "Permission Required"
+                    }
+                    val info = "$name - ${it.address}"
+
+                    if (!deviceList.contains(info)) {
+                        deviceList.add(info)
+                        arrayAdapter.notifyDataSetChanged()
+                    }
+                }
+            }
+        }
     }
 
     override fun onCreateView(
@@ -43,6 +86,21 @@ class AccountFragment : Fragment() {
         val accDao = TaskDatabase.getInstance(requireContext()).accountDao()
         val repository = AccountRepository(accDao)
         accountViewModel = AccountViewModelFactory(repository).create(AccountViewModel::class.java)
+
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+        deviceList = ArrayList()
+
+        arrayAdapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_list_item_1,
+            deviceList
+        )
+
+        binding.listView.adapter = arrayAdapter
+
+        binding.btnScan.setOnClickListener {
+            checkPermissionAndScan()
+        }
 
         binding.btnSave.setOnClickListener {
             saveInfo()
@@ -112,4 +170,111 @@ class AccountFragment : Fragment() {
             }
         }
     }
+
+    private fun hasBluetoothPermission(): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.BLUETOOTH_CONNECT
+            ) == PackageManager.PERMISSION_GRANTED
+        } else {
+            true
+        }
+    }
+
+    private fun hasBluetoothConnectPermission(): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.BLUETOOTH_CONNECT
+            ) == PackageManager.PERMISSION_GRANTED
+        } else {
+            true
+        }
+    }
+
+    private fun checkPermissionAndScan() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S &&
+            ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.BLUETOOTH_SCAN
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requestPermissions(
+                arrayOf(
+                    Manifest.permission.BLUETOOTH_SCAN,
+                    Manifest.permission.BLUETOOTH_CONNECT
+                ),
+                101
+            )
+        } else {
+            startScan()
+        }
+    }
+
+    @RequiresPermission(Manifest.permission.BLUETOOTH_SCAN)
+    private fun startScan() {
+
+        if (!hasAllPermissions()) {
+            requestPermissions(
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+                    arrayOf(
+                        Manifest.permission.BLUETOOTH_SCAN,
+                        Manifest.permission.BLUETOOTH_CONNECT
+                    )
+                else
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                101
+            )
+            return
+        }
+
+        if (!bluetoothAdapter.isEnabled) {
+            startActivity(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE))
+            return
+        }
+
+        if (bluetoothAdapter.isDiscovering) {
+            bluetoothAdapter.cancelDiscovery()
+        }
+
+        deviceList.clear()
+
+        requireContext().registerReceiver(
+            receiver,
+            IntentFilter(BluetoothDevice.ACTION_FOUND)
+        )
+
+        val started = bluetoothAdapter.startDiscovery()
+        Log.d("BT", "Discovery started: $started")
+    }
+
+
+    private fun hasAllPermissions(): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.BLUETOOTH_SCAN
+            ) == PackageManager.PERMISSION_GRANTED &&
+                    ActivityCompat.checkSelfPermission(
+                        requireContext(),
+                        Manifest.permission.BLUETOOTH_CONNECT
+                    ) == PackageManager.PERMISSION_GRANTED
+        } else {
+            ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        }
+    }
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        try {
+            requireContext().unregisterReceiver(receiver)
+        } catch (_: Exception) { }
+        _binding = null
+    }
+
 }

@@ -182,4 +182,9 @@ class HomeFragment : Fragment() {
 
         builder.show()
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

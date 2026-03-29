@@ -109,4 +109,9 @@ class CategoryFragment : Fragment() {
             binding.taskDt!!.text = ""
         }
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

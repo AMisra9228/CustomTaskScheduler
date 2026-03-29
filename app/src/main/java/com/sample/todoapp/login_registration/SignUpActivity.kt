@@ -8,8 +8,10 @@ import android.util.Patterns
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.airbnb.lottie.LottieAnimationView
 import com.sample.todoapp.MainActivity
 import com.sample.todoapp.MyApp
+import com.sample.todoapp.R
 import com.sample.todoapp.databinding.ActivitySignUpBinding
 import java.util.Calendar
 import javax.inject.Inject
@@ -24,23 +26,24 @@ class SignUpActivity : AppCompatActivity() {
     private var locTime: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // Dagger injection must happen before super.onCreate()
         (application as MyApp).appComponent.inject(this)
 
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val lottie = findViewById<LottieAnimationView>(R.id.ivRegLogo)
+        lottie.setAnimation("schedule.json")
+        lottie.playAnimation()
+
         viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
 
-        // Now you can use the injected sharedPreferences
         val savedName = sharedPreferences.getString("user_name", "")
         val savedPwd = sharedPreferences.getString("pwd", "")
 
         if (!savedName.equals("") && !savedPwd.equals("")) {
             val i = Intent(this, MainActivity::class.java)
             startActivity(i)
-            // It's good practice to finish the activity to prevent the user from navigating back
             finish()
         }
 
@@ -54,6 +57,7 @@ class SignUpActivity : AppCompatActivity() {
             finish()
         }
     }
+
 
     private fun saveUserInfo() {
         try {

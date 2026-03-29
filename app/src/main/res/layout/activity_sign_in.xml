@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,127 +7,143 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
+    android:paddingStart="50dp"
+    android:paddingEnd="50dp"
     tools:context=".login_registration.SignInActivity">
 
-    <ScrollView
+    <ImageView
+        android:id="@+id/ivLogLogo"
+        android:layout_width="0dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="18dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/logo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tvSignIn"
+        app:layout_constraintVertical_chainStyle="packed"/>
+
+    <TextView
+        android:id="@+id/tvSignIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="55dp"
+        android:layout_marginBottom="15dp"
+        android:text="Sign In"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/ivLogLogo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/emailInputLayout"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/emailInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dp">
+        android:hint="Enter username/email"
+        app:hintTextColor="@color/black"
+        android:background="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/tvSignIn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/passwordInputLayout">
 
-
-        <LinearLayout
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/atvEmailLog"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
-            android:layout_marginEnd="50dp"
-            android:orientation="vertical">
+            android:textColor="@color/black"
+            android:textSize="15sp" />
 
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <ImageView
-                android:id="@+id/ivLogLogo"
-                android:layout_width="match_parent"
-                android:layout_height="160dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/passwordInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:hint="Enter password"
+        app:endIconMode="password_toggle"
+        app:hintTextColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/emailInputLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tvForgotPass">
 
-                android:layout_marginTop="18dp"
-                android:layout_marginBottom="55dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/logo" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/atvPasswordLog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
 
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <ImageView
-                android:id="@+id/ivSignIn"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginBottom="15dp"
-                android:contentDescription="Sign in text on registration activity"
-                android:src="@drawable/sign_in" />
+    <TextView
+        android:id="@+id/tvForgotPass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/forgot_password"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/passwordInputLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnSignIn"/>
 
+    <Button
+        android:id="@+id/btnSignIn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/btnsignin_gradient"
+        android:text="@string/sign_inLog"
+        android:textColor="#FFFFFF"
+        app:layout_constraintTop_toBottomOf="@id/tvForgotPass"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnGoogleSignIn"/>
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/rounded_rect"
-                android:hint="Enter username/email"
-                app:hintTextColor="@color/white">
+    <ImageView
+        android:id="@+id/btnGoogleSignIn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/google"
+        app:layout_constraintTop_toBottomOf="@id/btnSignIn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tvSignUp"/>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/atvEmailLog"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="15sp"
-                    android:textColor="@color/white"
-                    android:drawableStart="@drawable/icon_person"
-                    android:drawablePadding="10dp" />
+    <ImageView
+        android:id="@+id/btnFbSignIn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/fb"
+        app:layout_constraintBottom_toTopOf="@id/tvSignUp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.476"
+        app:layout_constraintStart_toStartOf="@id/btnGoogleSignIn"
+        app:layout_constraintTop_toBottomOf="@id/btnSignIn"
+        app:layout_constraintVertical_bias="0.0" />
 
-            </com.google.android.material.textfield.TextInputLayout>
+    <TextView
+        android:id="@+id/tvSignUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="32dp"
+        android:text="@string/signup_redirect"
+        android:textColor="@color/gray"
+        app:layout_constraintTop_toBottomOf="@id/btnGoogleSignIn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_marginTop="10dp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/rounded_rect"
-                android:hint="Enter password"
-                app:hintTextColor="@color/white"
-                app:endIconMode="password_toggle">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/atvPasswordLog"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="15sp"
-                    android:textColor="@color/white"
-                    android:drawableStart="@drawable/icon_password"
-                    android:drawablePadding="10dp" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-            <TextView
-                android:id="@+id/tvForgotPass"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="3dp"
-                android:layout_marginBottom="3dp"
-                android:text="@string/forgot_password"
-                android:textColor="@color/gray" />
-
-
-            <Button
-                android:id="@+id/btnSignIn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/btnsignin_gradient"
-                android:text="@string/sign_inLog"
-                android:textColor="#FFFFFF" />
-
-
-            <ImageView
-                android:id="@+id/ivFacebook"
-                android:layout_width="wrap_content"
-                android:layout_height="51dp"
-                android:layout_marginTop="10dp"
-                android:contentDescription="Social site button"
-                android:src="@drawable/google" />
-
-
-            <TextView
-                android:id="@+id/tvSignUp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:text="@string/signup_redirect"
-                android:textColor="@color/gray" />
-
-
-        </LinearLayout>
-
-
-    </ScrollView>
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
