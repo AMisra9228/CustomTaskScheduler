@@ -85,7 +85,9 @@ class SignInActivity : AppCompatActivity() {
 
         binding.tvSignUp.setOnClickListener {
             val i = Intent(context, SignUpActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(i)
+            finish()
         }
 
         binding.tvForgotPass.setOnClickListener {
