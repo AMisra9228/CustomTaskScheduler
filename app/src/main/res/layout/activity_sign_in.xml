@@ -6,7 +6,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@color/aqua_haze"
     android:paddingStart="50dp"
     android:paddingEnd="50dp"
     tools:context=".login_registration.SignInActivity">
@@ -31,7 +31,7 @@
         android:layout_marginTop="55dp"
         android:layout_marginBottom="15dp"
         android:text="Sign In"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@id/ivLogLogo"
@@ -49,13 +49,21 @@
         app:layout_constraintTop_toBottomOf="@id/tvSignIn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/passwordInputLayout">
+        app:layout_constraintBottom_toTopOf="@id/passwordInputLayout"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeColor="#6A5ACD"
+        app:boxStrokeWidthFocused="2dp"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusBottomEnd="12dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/atvEmailLog"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
+            app:hintTextColor="@color/colorAccent"
             android:textSize="15sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -69,11 +77,19 @@
         android:background="@color/white"
         android:hint="Enter password"
         app:endIconMode="password_toggle"
-        app:hintTextColor="@color/black"
+        android:textColor="@color/black"
+        android:textColorHint="@color/gray"
         app:layout_constraintTop_toBottomOf="@id/emailInputLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/tvForgotPass">
+        app:layout_constraintBottom_toTopOf="@id/btnSignIn"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeColor="#6A5ACD"
+        app:boxStrokeWidthFocused="2dp"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusBottomEnd="12dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/atvPasswordLog"
@@ -90,11 +106,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/forgot_password"
-        android:textColor="@color/white"
-        app:layout_constraintTop_toBottomOf="@id/passwordInputLayout"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@color/black"
+        app:hintTextColor="@color/colorAccent"
+        app:layout_constraintBottom_toTopOf="@id/btnGoogleSignIn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/btnSignIn"/>
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnSignIn" />
 
     <Button
         android:id="@+id/btnSignIn"
@@ -104,10 +122,11 @@
         android:background="@drawable/btnsignin_gradient"
         android:text="@string/sign_inLog"
         android:textColor="#FFFFFF"
-        app:layout_constraintTop_toBottomOf="@id/tvForgotPass"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnGoogleSignIn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/btnGoogleSignIn"/>
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/passwordInputLayout" />
 
     <ImageView
         android:id="@+id/btnGoogleSignIn"
@@ -115,7 +134,7 @@
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
         android:src="@drawable/google"
-        app:layout_constraintTop_toBottomOf="@id/btnSignIn"
+        app:layout_constraintTop_toBottomOf="@id/tvForgotPass"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/tvSignUp"/>
@@ -124,13 +143,13 @@
         android:id="@+id/btnFbSignIn"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="22dp"
         android:src="@drawable/fb"
         app:layout_constraintBottom_toTopOf="@id/tvSignUp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toStartOf="@id/btnGoogleSignIn"
-        app:layout_constraintTop_toBottomOf="@id/btnSignIn"
+        app:layout_constraintTop_toBottomOf="@id/tvForgotPass"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
