@@ -24,7 +24,9 @@ import androidx.annotation.RequiresPermission
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.sample.todoapp.R
+import com.sample.todoapp.common.Utility
 import com.sample.todoapp.data.TaskDatabase
+import com.sample.todoapp.databinding.FragAccBinding
 import com.sample.todoapp.databinding.FragmentAccountBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -36,7 +38,7 @@ import java.util.Date
 
 class AccountFragment : Fragment() {
 
-    private var _binding: FragmentAccountBinding? = null
+    private var _binding: FragAccBinding? = null
     private val binding get() = _binding!!
     private lateinit var accountViewModel: AccountViewModel
 
@@ -81,7 +83,7 @@ class AccountFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = FragmentAccountBinding.inflate(inflater, container, false)
+        _binding = FragAccBinding.inflate(inflater, container, false)
 
         val accDao = TaskDatabase.getInstance(requireContext()).accountDao()
         val repository = AccountRepository(accDao)
@@ -96,7 +98,7 @@ class AccountFragment : Fragment() {
             deviceList
         )
 
-        binding.listView.adapter = arrayAdapter
+        /*binding.listView.adapter = arrayAdapter
 
         binding.btnScan.setOnClickListener {
             checkPermissionAndScan()
@@ -104,10 +106,14 @@ class AccountFragment : Fragment() {
 
         binding.btnSave.setOnClickListener {
             saveInfo()
-            /*CoroutineScope(Dispatchers.IO).launch {
+            *//*CoroutineScope(Dispatchers.IO).launch {
                 //get network time
                 printTimes()
-            }*/
+            }*//*
+        }*/
+
+        binding.btnSignOut.setOnClickListener {
+            Utility().clearUserLoginData(requireContext())
         }
 
         return binding.root
@@ -118,7 +124,7 @@ class AccountFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-    private fun saveInfo() {
+    /*private fun saveInfo() {
         val userName = binding.userName.text.toString()
         val userMail = binding.userMail.text.toString()
 
@@ -133,7 +139,7 @@ class AccountFragment : Fragment() {
             binding.userName.text?.clear()
             binding.userMail.text?.clear()
         }
-    }
+    }*/
 
     @Throws(IOException::class)
     suspend fun printTimes() {

@@ -98,6 +98,7 @@ dependencies {
     kapt("com.google.dagger:dagger-compiler:2.51.1")
 
     implementation("com.airbnb.android:lottie:6.4.0")
+    implementation("de.hdodenhof:circleimageview:3.1.0")
 
     testImplementation(libs.junit)
     testImplementation(libs.truth)
